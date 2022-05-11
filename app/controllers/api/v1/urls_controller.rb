@@ -1,4 +1,4 @@
-class UrlsController < ApplicationController
+class Api::V1::UrlsController < Api::V1::BaseController
   before_action :enough_short_urls, only: [:create]
 
   SHORT_URL_LIST = "short_urls"
