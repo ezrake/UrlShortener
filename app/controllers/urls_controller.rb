@@ -4,6 +4,10 @@ class UrlsController < ApplicationController
   SHORT_URL_LIST = "short_urls"
   MIN_UNIQUE_IDS = 500
 
+  def new
+    @url = Url.new
+  end
+
   def create
     if params.has_key?(:short_url)
       short_url = params[:short_url]

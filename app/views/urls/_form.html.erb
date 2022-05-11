@@ -1,0 +1,19 @@
+<%= form_with model: url, url: "/short_url" do |form|%>
+  <div>
+    <%= form.label :"Long Url" %><br>
+    <%= form.text_field :long_url %>
+    <% url.errors.full_messages_for(:long_url).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :"Custom url" %><br>
+    <%= form.text_field :short_url %><br>
+    <% url.errors.full_messages_for(:short_url).each do |message| %>
+      <div><%=message%></div>
+    <% end %>
+  </div>
+  <div>
+    <%=form.submit "Submit", disable_with: 'Submiting...' %>
+  </div>
+<% end %>
