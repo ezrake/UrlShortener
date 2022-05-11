@@ -4,32 +4,36 @@ class UrlsController < ApplicationController
   SHORT_URL_LIST = "short_urls"
   MIN_UNIQUE_IDS = 500
 
+  def show
+    @url = Url.find(params[:id])
+  end
+
   def new
     @url = Url.new
   end
 
   def create
-    if params.has_key?(:short_url)
-      short_url = params[:short_url]
-      #render status: 409 if !Url.find_by(short_url: short_url)
+    if !params[:url][:short_url].empty?
+      short_url = params[:url][:short_url]
     else
       while true
         short_url = fetch_redis_shorturl
         break if !Url.find_by(short_url: short_url)
       end
-      full_url = request.base_url + "/" + short_url
     end
 
+    full_url = request.base_url + "/" + short_url
     @url = Url.new(
       short_url: short_url,
-      long_url: params[:long_url],
+      long_url: params[:url][:long_url],
       full_url: full_url,
     )
 
     if @url.save
-      render json: @url, status: :created
+      flash[:success] = "Short url successfully created"
+      redirect_to url_path(@url)
     else
-      render status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -58,6 +62,6 @@ class UrlsController < ApplicationController
   end
 
   def url_params
-    params.require(:long_url).permit(:long_url, :short_url)
+    params.require(:url).permit(:long_url, :short_url)
   end
 end
