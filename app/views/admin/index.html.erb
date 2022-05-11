@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <th>Long Url</th>
+    <th>Short Url</th>
+    <th>Full Url</th>
+    <th>Created at</th>
+    <th>View</th>
+  </tr>
+  <% @urls.each do |url| %>
+    <tr>
+      <td><%= url.long_url %></td>
+      <td><%= url.short_url %></td>
+      <td><%= url.full_url %></td>
+      <td><%= url.created_at %></td>
+      <td><%= link_to "View", admin_url_path(url)%></td>
+    </tr>
+  <% end %>
+</table>
+<%= paginate @urls %>

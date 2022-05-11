@@ -11,5 +11,9 @@ Rails.application.routes.draw do
   end
   post "/short_url", to: "urls#create"
   get "/urls/:id", to: "urls#show", as: "url"
+
+  get "admin/urls", to: "admin#index"
+  get "admin/urls/:id", to: "admin#show_url", as: "admin_url"
+
   get "/:short_url", to: "urls#long_url_redirect"
 end
