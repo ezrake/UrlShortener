@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  post "/short_url", to: "urls#create"
-  get "/:short_url", to: "urls#long_url_redirect"
+  namespace :api do
+    namespace :v1 do
+      post "/short_url", to: "urls#create"
+      get "/:short_url", to: "urls#long_url_redirect"
+    end
+  end
 end
