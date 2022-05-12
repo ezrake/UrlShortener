@@ -7,15 +7,14 @@ class UrlsController < ApplicationController
   def create
     if params.has_key?(:short_url)
       short_url = params[:short_url]
-      #render status: 409 if !Url.find_by(short_url: short_url)
     else
       while true
         short_url = fetch_redis_shorturl
         break if !Url.find_by(short_url: short_url)
       end
-      full_url = request.base_url + "/" + short_url
     end
 
+    full_url = request.base_url + "/" + short_url
     @url = Url.new(
       short_url: short_url,
       long_url: params[:long_url],
