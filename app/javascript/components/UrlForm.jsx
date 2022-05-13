@@ -24,6 +24,7 @@ class UrlForm extends React.Component {
 
     async handleSubmit(event) {
         event.preventDefault()
+        this.setState({errors: {}})
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -39,7 +40,7 @@ class UrlForm extends React.Component {
         const response = await fetch("http://127.0.0.1:3000/api/v1/short_url", requestOptions)
         if (!response.ok) {
             response.json()
-                .then((errors) => this.setState({ errors: errors }))
+                .then((errors) => this.setState({ errors: errors, success: false }))
         } else {
             response.json()
                 .then(result => {
@@ -58,11 +59,6 @@ class UrlForm extends React.Component {
                     <input type="text" name="long_url" onChange={this.handleChange}/><br/>
                     <label>Short Url:</label>
                     <input type="text" name="short_url" onChange={this.handleChange} /><br />
-                    {!(this.state.errors && Object.keys(this.state.errors).length === 0) &&
-                        this.state.errors.short_url.map((error) => {
-                            <div>{this.state.form.short_url + ": " + error}</div>
-                        })
-                    }
                     <input type="submit" value="Submit"/>
                 </form>
                 {this.state.success && 
@@ -70,6 +66,13 @@ class UrlForm extends React.Component {
                         Long Url: {this.state.result.long_url} <br />
                         Short Url: <a href={this.state.result.full_url}>{this.state.result.full_url}</a>
                     </p>
+                }
+                {Object.keys(this.state.errors).length !== 0 &&
+                    Object.keys(this.state.errors).map((errorKey, i) => {
+                        return <p key={i}>{errorKey}: <br />
+                            {this.state.errors[errorKey].map((error, j) => <span key={j}>{error}</span>)}
+                            </p>
+                    })
                 }
             </div>    
         )
