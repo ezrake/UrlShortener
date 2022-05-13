@@ -53,8 +53,9 @@ gem "rack-cors"
 
 gem "redis"
 gem "sidekiq"
-gem "psych", "< 4"
-gem "webpacker", "~> 4.3.x"
+gem "kaminari"
+gem "devise"
+gem "sidekiq-cron"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
