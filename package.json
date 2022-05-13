@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@webpack-cli/serve": "^1.6.1",
     "webpack-dev-server": "^4.9.0"
   },
   "dependencies": {
