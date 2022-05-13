@@ -5,17 +5,16 @@ class Api::V1::UrlsController < Api::V1::BaseController
   MIN_UNIQUE_IDS = 500
 
   def create
-    if params.has_key?(:short_url)
+    if !params[:short_url].empty?
       short_url = params[:short_url]
-      #render status: 409 if !Url.find_by(short_url: short_url)
     else
       while true
         short_url = fetch_redis_shorturl
         break if !Url.find_by(short_url: short_url)
       end
-      full_url = request.base_url + "/" + short_url
     end
 
+    full_url = request.base_url + "/" + short_url
     @url = Url.new(
       short_url: short_url,
       long_url: params[:long_url],
@@ -25,14 +24,8 @@ class Api::V1::UrlsController < Api::V1::BaseController
     if @url.save
       render json: @url, status: :created
     else
-      render status: :unprocessable_entity
+      render json: @url.errors, status: :unprocessable_entity
     end
-  end
-
-  def long_url_redirect
-    long_url = Url.find_by(short_url: params[:short_url]).long_url
-
-    redirect_to long_url, allow_other_host: true #, status: :moved_permanently,
   end
 
   private
