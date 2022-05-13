@@ -6,8 +6,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_pack_tag 'index' %>
+    <%= javascript_pack_tag 'index', defer: true %>
   </head>
   <body>
+    <div id="app"></div>
   </body>
 </html>
