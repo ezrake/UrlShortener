@@ -33,3 +33,7 @@ tr:nth-child(even) {
     display: block;
     text-decoration: none;
 }
+
+nav-link {
+    margin: auto;
+}
