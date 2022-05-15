@@ -1,4 +1,5 @@
 class Url < ApplicationRecord
+  has_many :click_stats, dependent: :destroy
   validates :short_url, uniqueness: true, length: { is: 8 }
   before_save :set_expires_at
 
