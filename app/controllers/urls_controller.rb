@@ -32,9 +32,18 @@ class UrlsController < ApplicationController
   end
 
   def long_url_redirect
-    long_url = Url.find_by(short_url: params[:short_url]).long_url
+    begin
+      @url = Url.find_by!(short_url: params[:short_url])
+    rescue ActiveRecord::RecordNotFound
+      render :file => "public/404.html", status: :not_found and return
+    end
 
-    redirect_to long_url, allow_other_host: true #, status: :moved_permanently,
+    AnalyticsJob.perform_later(
+      user_agent: request.headers["User-Agent"],
+      url: @url,
+    )
+
+    redirect_to @url.long_url, allow_other_host: true
   end
 
   private
