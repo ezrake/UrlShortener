@@ -53,8 +53,8 @@ gem "rack-cors"
 
 gem "redis"
 gem "sidekiq"
-gem "kaminari"
-gem "devise"
+gem "psych", "< 4"
+gem "webpacker", "~> 4.3.x"
 gem "sidekiq-cron"
 
 group :development, :test do

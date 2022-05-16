@@ -28,6 +28,21 @@ class Api::V1::UrlsController < Api::V1::BaseController
     end
   end
 
+  def long_url_redirect
+    begin
+      @url = Url.find_by!(short_url: params[:short_url])
+    rescue ActiveRecord::RecordNotFound
+      render status: :not_found and return
+    end
+
+    AnalyticsJob.perform_later(
+      user_agent: request.headers["User-Agent"],
+      url: @url,
+    )
+
+    redirect_to @url.long_url, allow_other_host: true
+  end
+
   private
 
   def fetch_redis_shorturl
