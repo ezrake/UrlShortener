@@ -8,6 +8,7 @@ class AdminController < ApplicationController
 
   def show_url
     @url = Url.find(params[:id])
-    render "urls/show"
+    @click_stats = @url.click_stats.group(:user_agent).count(:clicks)
+    render "admin/show"
   end
 end

@@ -1,0 +1,23 @@
+<p>
+  Long Url: <%= @url.long_url %> <br>
+  Short Url: <a href="<%= @url.full_url %>"><%= @url.full_url %></a>
+</p>
+<p>
+  <h4>Click Stats</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Browser</th>
+        <th>Clicks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @click_stats.each do |agent, click_count|%>
+        <tr>
+          <td><%= agent %></td>
+          <td><%= click_count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</p>
