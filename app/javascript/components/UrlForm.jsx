@@ -37,7 +37,9 @@ class UrlForm extends React.Component {
             redirect: 'follow'
         };
 
-        const response = await fetch("http://127.0.0.1:3000/api/v1/short_url", requestOptions)
+        let host = "https://polar-gorge-50265.herokuapp.com/api/v1/short_url"
+
+        const response = await fetch(host, requestOptions)
         if (!response.ok) {
             response.json()
                 .then((errors) => this.setState({ errors: errors, success: false }))
